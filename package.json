@@ -4,7 +4,8 @@
   "description": "Meadowlark",
   "main": "meadowlark.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon meadowlark.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
 }

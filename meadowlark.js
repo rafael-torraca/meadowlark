@@ -6,19 +6,17 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
-const fortunes = [
-  "Conquer your fears or they will conquer you.",
-  "Rivers need springs",
-  "Do not fear what you don't know",
-  "You will have a pleasant surprise",
-  "Whenever possible, keep it simple"
-]
+const fortune = require('./lib/fortune');
+
 
 
 // configura o view engine handlebars esse default eh a pagina handlebars main da views/layouts
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main'}));
 
 app.set('view engine', 'handlebars');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -27,8 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  res.render('about', {fortune: randomFortune});
+  res.render('about', {fortune: fortune.getFortune()});
 });
 
 app.get('/about/contact', (req, res) => {
