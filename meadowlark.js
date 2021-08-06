@@ -1,12 +1,12 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
 
+
+const handlers = require('./lib/handlers');
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
-
-const fortune = require('./lib/fortune');
 
 
 
@@ -20,13 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', (req, res) => {
-  res.render('home');
-});
+app.get('/', handlers.home);
 
-app.get('/about', (req, res) => {
-  res.render('about', {fortune: fortune.getFortune()});
-});
+app.get('/about', handlers.about);
 
 app.get('/about/contact', (req, res) => {
   res.type('text/plain');
@@ -39,19 +35,15 @@ app.get('/about/directions', (req, res) => {
 });
 
 // 404 not found personalized
-app.use((req, res) => {
-  res.status(404);
-  res.render('404');
-});
+app.use(handlers.notFound);
 
 // 500 error personalized
-app.use((err, req, res, next) => {
-  console.error(err.message);
-  res.status(500);
-  res.render('500');
-});
+app.use(handlers.serverError);
 
-app.listen(PORT, () => console.log(
-  `Express started on http://localhost:${PORT}`
-));
-
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Express started on http://localhost:${PORT}`);
+  });
+} else {
+  module.exports = app;
+}
