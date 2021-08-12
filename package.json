@@ -24,7 +24,7 @@
   "homepage": "https://github.com/rafael-torraca/meadowlark#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.0"
+    "express-handlebars": "^5.3.3"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
