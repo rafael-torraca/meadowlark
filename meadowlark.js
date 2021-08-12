@@ -2,6 +2,8 @@ const express = require('express');
 const expressHandlebars = require('express-handlebars');
 
 const handlers = require('./lib/handlers');
+const weatherMiddleware = require('./lib/middleware/weather');
+
 const app = express();
 
 
@@ -22,6 +24,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
+// middleware
+app.use(weatherMiddleware);
 
 // routes
 app.get('/', handlers.home);
