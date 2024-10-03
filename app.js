@@ -1,6 +1,7 @@
 import express from "express";
 import expressHandlebars from "express-handlebars";
 import path from "path";
+import getFortune from "./lib/fortune.js";
 
 const __dirname = path.resolve();
 const app = express();
@@ -16,8 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/about", (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render("about", { fortune: randomFortune });
+    res.render("about", { fortune: getFortune() });
 });
 
 app.use((req, res) => {
@@ -30,14 +30,6 @@ app.use((err, req, res, next) => {
     res.status(500);
     res.render("500");
 });
-
-const fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprase.",
-    "Whenever possible, keep it simple.",
-];
 
 app.listen(PORT, () =>
     console.log(`Express started on http://localhost:${PORT}`),
