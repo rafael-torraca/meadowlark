@@ -1,36 +1,40 @@
 import express from "express";
 import expressHandlebars from "express-handlebars";
 import path from "path";
-import getFortune from "./lib/fortune.js";
+import { Handlers } from "./lib/handlers.js";
 
 const __dirname = path.resolve();
 const app = express();
-
-// Templating engine configure
-app.engine("handlebars", expressHandlebars.engine({ defaultLayout: "main" })); // layout principal
-app.set("view engine", "handlebars");
-
-app.use(express.static(__dirname + "/public"));
-
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => res.render("home"));
+app.engine("handlebars", expressHandlebars.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+app.use(express.static(__dirname + "/public"));
+app.disable("x-powered-by");
+app.get("/", Handlers.home);
+app.get("/about", Handlers.about);
 
-app.get("/about", (req, res) => {
-    res.render("about", { fortune: getFortune() });
+app.get("/headers", (req, res) => {
+    res.type("text/plain");
+    const headers = Object.entries(req.headers).map(
+        ([key, value]) => `${key}: ${value}`,
+    );
+    res.send(headers.join("\n"));
 });
 
-app.use((req, res) => {
-    res.status(404);
-    res.render("404");
+app.get("/tests", (req, res) => {
+    let ip = req.ip;
+    console.log(typeof ip);
+    res.send("valew!");
 });
 
-app.use((err, req, res, next) => {
-    console.error(err.message);
-    res.status(500);
-    res.render("500");
-});
+app.use(Handlers.notFound);
+app.use(Handlers.serverErorr);
 
-app.listen(PORT, () =>
-    console.log(`Express started on http://localhost:${PORT}`),
-);
+if (PORT !== "test") {
+    app.listen(PORT, () => {
+        console.log(`Express started on http://localhost:${PORT}`);
+    });
+}
+
+export default app;
