@@ -1,36 +1,40 @@
 {
-  "name": "meadowlark",
-  "version": "1.0.0",
-  "description": "Node, Express and Handlebars learning.",
-  "type": "module",
-  "main": "app",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/rafael-torraca/meadowlark.git"
-  },
-  "keywords": [
-    "node",
-    "express",
-    "javascript",
-    "handlebars"
-  ],
-  "author": "Rafael Torraca Leandro",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rafael-torraca/meadowlark/issues"
-  },
-  "homepage": "https://github.com/rafael-torraca/meadowlark#readme",
-  "dependencies": {
-    "express": "^4.21.0",
-    "express-handlebars": "^8.0.1"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.7.4",
-    "nodemon": "^3.1.7"
-  }
+    "name": "meadowlark",
+    "version": "1.0.0",
+    "description": "Node, Express and Handlebars learning.",
+    "type": "module",
+    "main": "app",
+    "scripts": {
+        "dev:server": "nodemon --legacy-watch --ext js,hbs,css,handlebars --ignore node_modules app.js",
+        "dev:bs": "browser-sync start --proxy 'http://localhost:3000' --files 'views/**/*.handlebars' 'public/**/*' --port 3001 --no-open --no-ui --reload-delay 200",
+        "dev": "run-p dev:*",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/rafael-torraca/meadowlark.git"
+    },
+    "keywords": [
+        "node",
+        "express",
+        "javascript",
+        "handlebars"
+    ],
+    "author": "Rafael Torraca Leandro",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rafael-torraca/meadowlark/issues"
+    },
+    "homepage": "https://github.com/rafael-torraca/meadowlark#readme",
+    "dependencies": {
+        "express": "^5.1.0",
+        "express-handlebars": "^8.0.3"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.3",
+        "@types/node": "^24.3.0",
+        "browser-sync": "^3.0.4",
+        "nodemon": "^3.1.10",
+        "npm-run-all": "^4.1.5"
+    }
 }

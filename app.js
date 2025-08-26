@@ -7,9 +7,11 @@ const __dirname = path.resolve();
 const app = express();
 
 // Templating engine configure
-app.engine("handlebars", expressHandlebars.engine({ defaultLayout: "main" })); // layout principal
+app.engine("handlebars", expressHandlebars.engine({ defaultLayout: "main" }));
+// layout principal
 app.set("view engine", "handlebars");
-
+app.set("views", path.join(__dirname, "views"));
+app.set("view cache", false);
 app.use(express.static(__dirname + "/public"));
 
 const PORT = process.env.PORT || 3000;
